@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-const JavaScriptObfuscator = require('javascript-obfuscator');
+const { minify } = require('terser');
 
-// Anti-debug + anti-right-click script (plain, not obfuscated for reliability)
 const antiDebugScript = `
 (function(){try{
   document.addEventListener('contextmenu',function(e){e.preventDefault();});
@@ -18,7 +17,7 @@ const antiDebugScript = `
 const copyrightWatermark =
   '© 2025 ingozhou. All rights reserved. Unauthorized commercial use is prohibited.';
 
-function obfuscateHtmlFile(filePath) {
+async function obfuscateHtmlFile(filePath) {
   let html = fs.readFileSync(filePath, 'utf8');
   const originalSize = Buffer.byteLength(html, 'utf8');
 
@@ -43,7 +42,7 @@ function obfuscateHtmlFile(filePath) {
     }
   }
 
-  // 3. Obfuscate inline <script> tags
+  // 3. Minify inline <script> tags with terser (safe, handles eval correctly)
   const scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gi;
   let match;
   let lastIndex = 0;
@@ -69,30 +68,31 @@ function obfuscateHtmlFile(filePath) {
     }
 
     try {
-      // Conservative obfuscation: avoid aggressive transforms that break code
-      const obfuscated = JavaScriptObfuscator.obfuscate(jsCode, {
-        compact: true,
-        controlFlowFlattening: false,
-        deadCodeInjection: false,
-        debugProtection: false,
-        disableConsoleOutput: true,
-        identifierNamesGenerator: 'hexadecimal',
-        rotateStringArray: true,
-        selfDefending: false,
-        stringArray: true,
-        stringArrayEncoding: ['base64'],
-        stringArrayThreshold: 0.75,
-        transformObjectKeys: true,
-        unicodeEscapeSequence: false,
-      }).getObfuscatedCode();
+      const minified = await minify(jsCode, {
+        compress: {
+          drop_console: false,
+          drop_debugger: true,
+          passes: 2,
+        },
+        mangle: {
+          properties: false,
+          toplevel: false,
+        },
+        format: {
+          comments: false,
+        },
+      });
 
-      // FIX: use indexOf/slice instead of .replace() which misinterprets $ in replacement
+      if (!minified.code) {
+        throw new Error('Terser returned empty code');
+      }
+
       const codeStart = fullMatch.indexOf(jsCode);
       const beforeCode = fullMatch.substring(0, codeStart);
       const afterCode = fullMatch.substring(codeStart + jsCode.length);
-      result += beforeCode + '\n' + obfuscated + '\n' + afterCode;
+      result += beforeCode + '\n' + minified.code + '\n' + afterCode;
     } catch (err) {
-      console.warn(`Warning: could not obfuscate script in ${path.basename(filePath)}: ${err.message}`);
+      console.warn(`Warning: could not minify script in ${path.basename(filePath)}: ${err.message}`);
       result += fullMatch;
     }
 
@@ -108,10 +108,14 @@ function obfuscateHtmlFile(filePath) {
   );
 }
 
-const files = [
-  path.join(__dirname, '../public/projects/01-家庭财务中枢.html'),
-  path.join(__dirname, '../public/projects/03-持仓管理器.html'),
-];
+(async () => {
+  const files = [
+    path.join(__dirname, '../public/projects/01-家庭财务中枢.html'),
+    path.join(__dirname, '../public/projects/03-持仓管理器.html'),
+  ];
 
-files.forEach(obfuscateHtmlFile);
-console.log('Done. Both iframe HTML files have been protected.');
+  for (const file of files) {
+    await obfuscateHtmlFile(file);
+  }
+  console.log('Done.');
+})();
