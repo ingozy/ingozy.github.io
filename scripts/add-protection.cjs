@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const antiDebugScript = `(function(){try{document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});setInterval(function(){if(window.outerHeight-window.innerHeight>160||window.outerWidth-window.innerWidth>160){document.body.innerHTML='';}},1000);}catch(e){}})();`;
+const antiDebugScript = `(function(){try{document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});}catch(e){}})();`;
 
 const copyrightNote = '<!--\n  © 2025 ingozhou. 保留所有权利.\n  未经授权,禁止用于商业用途。\n  Source: github.com/ingozhou66\n-->';
 

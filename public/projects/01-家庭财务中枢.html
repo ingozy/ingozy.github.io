@@ -6,7 +6,7 @@
 -->
 <html lang="zh-CN">
 <head>
-<script>(function(){try{document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});setInterval(function(){if(window.outerHeight-window.innerHeight>160||window.outerWidth-window.innerWidth>160){document.body.innerHTML='';}},1000);}catch(e){}})();</script>
+<script>(function(){try{document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});}catch(e){}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>家庭财务中枢</title>
@@ -2492,7 +2492,6 @@ function renderBudget() {
   });
   document.getElementById('budget-monthly-total').textContent = fmtMoney(monthlyTotal);
   document.getElementById('budget-yearly-total').textContent = fmtMoney(monthlyTotal * 12);
-  document.getElementById('budget-retirement-total').textContent = fmtMoney(retirementTotal);
 
   // 退休参数和年度预测已移除
 }
