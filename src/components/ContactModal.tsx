@@ -142,7 +142,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
 
               {/* GitHub */}
               <a
-                href="https://github.com/ingo-zhou"
+                href="https://github.com/ingozy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 group"
@@ -153,7 +153,7 @@ export function ContactModal({ open, onClose }: ContactModalProps) {
                 <div className="flex-1 min-w-0">
                   <p className="text-xs text-txt-muted mb-0.5">GitHub</p>
                   <p className="text-sm font-mono text-txt-primary group-hover:text-gold transition-colors truncate">
-                    github.com/ingo-zhou
+                    github.com/ingozy
                   </p>
                 </div>
               </a>

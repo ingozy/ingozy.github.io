@@ -34,7 +34,7 @@ async function obfuscateHtmlFile(filePath) {
         html.slice(0, after) +
         '\n<!--\n  ' +
         copyrightWatermark +
-        '\n  Source: github.com/ingo-zhou\n-->' +
+        '\n  Source: github.com/ingozy\n-->' +
         html.slice(after);
     }
   }

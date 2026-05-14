@@ -59,7 +59,7 @@ export function FooterSection() {
             </h4>
             <div className="flex flex-col gap-2">
               <a
-                href="https://github.com/ingo-zhou"
+                href="https://github.com/ingozy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-sm text-txt-secondary hover:text-gold transition-colors w-fit"
