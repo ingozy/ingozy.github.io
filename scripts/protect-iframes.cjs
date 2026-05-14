@@ -8,9 +8,6 @@ const antiDebugScript = `
   document.addEventListener('keydown',function(e){
     if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}
   });
-  setInterval(function(){
-    if(window.outerHeight-window.innerHeight>160||window.outerWidth-window.innerWidth>160){document.body.innerHTML='';}
-  },1000);
 }catch(e){}})();
 `;
 
@@ -37,7 +34,7 @@ async function obfuscateHtmlFile(filePath) {
         html.slice(0, after) +
         '\n<!--\n  ' +
         copyrightWatermark +
-        '\n  Source: github.com/ingozhou66\n-->' +
+        '\n  Source: github.com/ingo-zhou\n-->' +
         html.slice(after);
     }
   }

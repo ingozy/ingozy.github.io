@@ -3,7 +3,7 @@ const path = require('path');
 
 const antiDebugScript = `(function(){try{document.addEventListener('contextmenu',function(e){e.preventDefault();});document.addEventListener('keydown',function(e){if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&(e.key==='I'||e.key==='J'))||(e.ctrlKey&&e.key==='U')){e.preventDefault();}});}catch(e){}})();`;
 
-const copyrightNote = '<!--\n  © 2025 ingozhou. 保留所有权利.\n  未经授权,禁止用于商业用途。\n  Source: github.com/ingozhou66\n-->';
+const copyrightNote = '<!--\n  © 2025 ingozhou. 保留所有权利.\n  未经授权,禁止用于商业用途。\n  Source: github.com/ingo-zhou\n-->';
 
 function protect(filePath) {
   let html = fs.readFileSync(filePath, 'utf8');
