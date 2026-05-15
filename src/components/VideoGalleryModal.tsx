@@ -284,9 +284,9 @@ export function VideoGalleryModal({
 
               {/* Video List Sidebar (multi-video only) */}
               {!isSingleVideo && (
-                <div className="w-full md:w-72 border-t md:border-t-0 md:border-l border-border bg-surface flex-shrink-0 flex flex-col max-h-[200px] md:max-h-none">
-                  {/* Video list header */}
-                  <div className="px-4 py-3 border-b border-border">
+                <div className="w-full md:w-72 border-t md:border-t-0 md:border-l border-border bg-surface flex-shrink-0 flex flex-col md:max-h-none">
+                  {/* Video list header - desktop only */}
+                  <div className="hidden md:block px-4 py-3 border-b border-border">
                     <h4 className="text-sm font-semibold text-txt-primary">
                       {project.title}
                     </h4>
@@ -295,8 +295,8 @@ export function VideoGalleryModal({
                     </p>
                   </div>
 
-                  {/* Video list */}
-                  <div className="flex-1 overflow-y-auto">
+                  {/* Video list - mobile: horizontal scroll, desktop: vertical */}
+                  <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto md:flex-1 scrollbar-thin">
                     {videos.map((video, index) => (
                       <button
                         key={index}
@@ -304,7 +304,7 @@ export function VideoGalleryModal({
                           setActiveIndex(index);
                           setIsPlaying(true);
                         }}
-                        className={`w-full flex items-start gap-3 p-3 text-left transition-colors border-l-2 ${
+                        className={`flex-shrink-0 flex items-center gap-3 p-3 text-left transition-colors border-l-2 md:w-full ${
                           activeIndex === index
                             ? 'border-l-gold bg-gold/5'
                             : 'border-l-transparent hover:bg-surface-elevated'
@@ -326,7 +326,7 @@ export function VideoGalleryModal({
                             </div>
                           )}
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 pr-2 md:pr-0">
                           <p
                             className={`text-sm font-medium truncate ${
                               activeIndex === index
@@ -336,7 +336,7 @@ export function VideoGalleryModal({
                           >
                             {video.title}
                           </p>
-                          <p className="text-xs text-txt-muted mt-0.5 line-clamp-2">
+                          <p className="hidden md:block text-xs text-txt-muted mt-0.5 line-clamp-2">
                             {video.description}
                           </p>
                         </div>
@@ -344,8 +344,8 @@ export function VideoGalleryModal({
                     ))}
                   </div>
 
-                  {/* Tech tags */}
-                  <div className="px-4 py-3 border-t border-border">
+                  {/* Tech tags - desktop only */}
+                  <div className="hidden md:block px-4 py-3 border-t border-border">
                     <div className="flex flex-wrap gap-1.5">
                       {project.techStack.map((tech) => (
                         <span key={tech} className="tech-tag text-[10px] py-0.5 px-1.5">
