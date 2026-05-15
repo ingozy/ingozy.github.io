@@ -49,22 +49,15 @@
 @layer components {
   .luminous-border {
     position: relative;
-    border-radius: 10px;
-    background: #111118;
-  }
-
-  .luminous-border::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: 11px;
+    z-index: 0;
     padding: 1px;
     background: conic-gradient(from var(--angle), transparent 0%, transparent 40%, rgba(201,160,80,0.5) 50%, transparent 60%, transparent 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
     animation: sweep-rotate 4s linear infinite;
-    pointer-events: none;
+  }
+
+  .luminous-border > * {
+    position: relative;
+    z-index: 1;
   }
 
   @keyframes sweep-rotate {
