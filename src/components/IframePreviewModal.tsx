@@ -15,7 +15,6 @@ export function IframePreviewModal({
   onClose,
 }: IframePreviewModalProps) {
   const [loading, setLoading] = useState(true);
-  const [showMobileTip, setShowMobileTip] = useState(true);
 
   // Reset loading state when project changes
   useEffect(() => {
