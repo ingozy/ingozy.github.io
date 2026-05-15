@@ -188,6 +188,7 @@ export function VideoGalleryModal({
                       poster={currentVideo.thumbnail}
                       className="w-full h-full object-contain"
                       preload="metadata"
+                      playsInline
                       onClick={() => setIsPlaying(!isPlaying)}
                     />
 
