@@ -95,22 +95,12 @@ export function IframePreviewModal({
             </div>
 
             {/* Mobile tip banner */}
-            {showMobileTip && (
-              <div className="md:hidden flex items-center justify-between px-4 py-2.5 bg-gold/10 border-b border-gold/20 flex-shrink-0">
-                <div className="flex items-center gap-2">
-                  <Monitor className="w-4 h-4 text-gold" />
-                  <span className="text-xs text-gold">
-                    建议在桌面端查看以获得最佳体验
-                  </span>
-                </div>
-                <button
-                  onClick={() => setShowMobileTip(false)}
-                  className="text-gold/70 hover:text-gold transition-colors"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
+            <div className="md:hidden flex items-center gap-2 px-4 py-2.5 bg-gold/10 border-b border-gold/20 flex-shrink-0">
+              <Monitor className="w-4 h-4 text-gold flex-shrink-0" />
+              <span className="text-xs text-gold">
+                建议在桌面端查看以获得最佳体验
+              </span>
+            </div>
 
             {/* Iframe Container */}
             <div className="flex-1 relative bg-surface-primary">
