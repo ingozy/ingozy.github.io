@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
 @layer base {
   :root {
     --background: 240 14% 4%;
@@ -51,18 +45,23 @@
     position: relative;
     z-index: 0;
     padding: 1px;
-    background: conic-gradient(from var(--angle), transparent 0%, transparent 40%, rgba(201,160,80,0.5) 50%, transparent 60%, transparent 100%);
-    animation: sweep-rotate 4s linear infinite;
+    border-radius: 0.75rem;
+    animation: breathe 3s ease-in-out infinite;
   }
 
   .luminous-border > * {
     position: relative;
     z-index: 1;
+    background: #111118;
+    border-radius: inherit;
   }
 
-  @keyframes sweep-rotate {
-    to {
-      --angle: 360deg;
+  @keyframes breathe {
+    0%, 100% {
+      background: rgba(201, 160, 80, 0.15);
+    }
+    50% {
+      background: rgba(201, 160, 80, 0.4);
     }
   }
 
