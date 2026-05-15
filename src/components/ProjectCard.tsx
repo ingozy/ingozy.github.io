@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Play, Sparkles } from 'lucide-react';
+import { Play } from 'lucide-react';
 import type { Project } from '@/data/projects';
 
 interface ProjectCardProps {
@@ -51,15 +51,6 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
             </div>
           )}
 
-          {/* MCN Hub complexity badge */}
-          {isMCN && (
-            <div className="absolute top-3 left-3">
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-mono font-medium bg-purple-500/15 text-purple-400 border border-purple-500/25 backdrop-blur-sm">
-                <Sparkles className="w-3 h-3" />
-                Full Stack
-              </span>
-            </div>
-          )}
         </div>
 
         {/* Content */}
