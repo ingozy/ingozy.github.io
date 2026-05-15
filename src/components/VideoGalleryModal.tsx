@@ -295,8 +295,9 @@ export function VideoGalleryModal({
                     </p>
                   </div>
 
-                  {/* Video list - mobile: horizontal scroll, desktop: vertical */}
-                  <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto md:flex-1 scrollbar-thin">
+                  {/* Video list - mobile: horizontal tabs, desktop: vertical sidebar */}
+                  <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto md:flex-1"
+                       style={{ WebkitOverflowScrolling: 'touch' }}>
                     {videos.map((video, index) => (
                       <button
                         key={index}
@@ -304,13 +305,14 @@ export function VideoGalleryModal({
                           setActiveIndex(index);
                           setIsPlaying(true);
                         }}
-                        className={`flex-shrink-0 flex items-center gap-3 p-3 text-left transition-colors border-l-2 md:w-full ${
+                        className={`flex-shrink-0 flex items-center gap-2 md:gap-3 px-3 md:px-3 py-2.5 md:py-3 text-left transition-colors border-b-2 md:border-b-0 md:border-l-2 md:w-full ${
                           activeIndex === index
-                            ? 'border-l-gold bg-gold/5'
-                            : 'border-l-transparent hover:bg-surface-elevated'
+                            ? 'border-b-gold md:border-l-gold bg-gold/5'
+                            : 'border-b-transparent md:border-l-transparent hover:bg-surface-elevated'
                         }`}
                       >
-                        <div className="relative w-20 h-12 rounded-md overflow-hidden flex-shrink-0 bg-surface-primary">
+                        {/* Thumbnail - desktop only */}
+                        <div className="hidden md:block relative w-20 h-12 rounded-md overflow-hidden flex-shrink-0 bg-surface-primary">
                           <img
                             src={video.thumbnail}
                             alt={video.title}
@@ -326,9 +328,9 @@ export function VideoGalleryModal({
                             </div>
                           )}
                         </div>
-                        <div className="min-w-0 pr-2 md:pr-0">
+                        <div className="min-w-0">
                           <p
-                            className={`text-sm font-medium truncate ${
+                            className={`text-sm font-medium whitespace-nowrap ${
                               activeIndex === index
                                 ? 'text-gold'
                                 : 'text-txt-primary'
