@@ -189,9 +189,6 @@ export function VideoGalleryModal({
                       className="w-full h-full object-contain"
                       preload="metadata"
                       playsInline
-                      webkit-playsinline="true"
-                      x5-playsinline="true"
-                      controlsList="nofullscreen"
                       onClick={() => setIsPlaying(!isPlaying)}
                     />
 
