@@ -13,6 +13,7 @@ export interface Project {
   type: 'iframe' | 'video';
   thumbnail: string;
   techStack: string[];
+  categories: string[];
   iframeSrc?: string;
   videos?: VideoItem[];
 }
@@ -39,6 +40,7 @@ export const projects: Project[] = [
     type: 'iframe',
     thumbnail: '/thumbnails/project-1.jpg',
     techStack: ['Vanilla JS', 'ECharts', 'Tailwind CSS', 'SheetJS'],
+    categories: ['家庭理财', '资产管理', '预算规划'],
     iframeSrc: '/projects/01-家庭财务中枢.html',
   },
   {
@@ -49,6 +51,7 @@ export const projects: Project[] = [
     type: 'video',
     thumbnail: '/thumbnails/project-2.jpg',
     techStack: ['Flask', 'SQLite', 'ECharts 5.5', 'Python'],
+    categories: ['投资分析', '量化策略', '技术交易'],
     videos: [
       {
         title: '数据与行情',
@@ -78,6 +81,7 @@ export const projects: Project[] = [
     type: 'iframe',
     thumbnail: '/thumbnails/project-3.jpg',
     techStack: ['Chart.js', 'Tailwind CSS', 'Flask', 'SQLite'],
+    categories: ['投资组合', '风险管理', '资产配置'],
     iframeSrc: '/projects/03-持仓管理器.html',
   },
   {
@@ -88,6 +92,7 @@ export const projects: Project[] = [
     type: 'video',
     thumbnail: '/thumbnails/project-4.jpg',
     techStack: ['React 19', 'tRPC', 'Drizzle ORM', 'Framer Motion'],
+    categories: ['达人营销', '客户管理', '数据分析'],
     videos: [
       {
         title: '平台演示',

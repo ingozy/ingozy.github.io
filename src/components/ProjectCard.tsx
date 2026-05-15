@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Play, Monitor, Sparkles } from 'lucide-react';
+import { Play, Sparkles } from 'lucide-react';
 import type { Project } from '@/data/projects';
 
 interface ProjectCardProps {
@@ -10,13 +10,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
   const isVideo = project.type === 'video';
-  const isIframe = project.type === 'iframe';
   const isMCN = project.id === 'mcn-hub';
-
-  // Type badge colors: blue for iframe, gold for video
-  const typeBadgeClass = isIframe
-    ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-    : 'bg-gold/10 text-gold border-gold/20';
 
   // Card border: MCN Hub gets luminous border, others get standard
   const cardBorderClass = isMCN
@@ -57,14 +51,6 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
             </div>
           )}
 
-          {/* Type badge - different colors for iframe vs video */}
-          <div className="absolute top-3 right-3">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-medium border backdrop-blur-sm ${typeBadgeClass}`}>
-              {isIframe ? <Monitor className="w-3 h-3" /> : <Play className="w-3 h-3" />}
-              {isVideo ? 'Video' : 'Interactive'}
-            </span>
-          </div>
-
           {/* MCN Hub complexity badge */}
           {isMCN && (
             <div className="absolute top-3 left-3">
@@ -88,19 +74,19 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
             {project.shortDescription}
           </p>
 
-          {/* Role tag */}
+          {/* Tech stack line */}
           <div className="mt-3">
             <span className="inline-flex items-center text-[11px] font-mono text-txt-muted">
               <span className="w-1 h-1 rounded-full bg-gold/50 mr-2" />
-              独立开发 · AI 协作
+              {project.techStack.join(' · ')}
             </span>
           </div>
 
-          {/* Tech tags */}
+          {/* Category tags */}
           <div className="mt-3 flex flex-wrap gap-2">
-            {project.techStack.slice(0, 4).map((tech) => (
-              <span key={tech} className="tech-tag">
-                {tech}
+            {project.categories.map((cat) => (
+              <span key={cat} className="tech-tag">
+                {cat}
               </span>
             ))}
           </div>
