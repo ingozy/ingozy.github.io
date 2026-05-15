@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Loader2 } from 'lucide-react';
+import { X, Loader2, Monitor } from 'lucide-react';
 import type { Project } from '@/data/projects';
 
 interface IframePreviewModalProps {
@@ -15,6 +15,7 @@ export function IframePreviewModal({
   onClose,
 }: IframePreviewModalProps) {
   const [loading, setLoading] = useState(true);
+  const [showMobileTip, setShowMobileTip] = useState(true);
 
   // Reset loading state when project changes
   useEffect(() => {
@@ -44,7 +45,7 @@ export function IframePreviewModal({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -58,7 +59,7 @@ export function IframePreviewModal({
 
           {/* Modal */}
           <motion.div
-            className="relative w-full max-w-[90vw] h-[90vh] bg-surface rounded-xl border border-border overflow-hidden flex flex-col"
+            className="relative w-full h-full md:max-w-[90vw] md:h-[90vh] bg-surface md:rounded-xl border-0 md:border border-border overflow-hidden flex flex-col"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -92,6 +93,24 @@ export function IframePreviewModal({
                 </button>
               </div>
             </div>
+
+            {/* Mobile tip banner */}
+            {showMobileTip && (
+              <div className="md:hidden flex items-center justify-between px-4 py-2.5 bg-gold/10 border-b border-gold/20 flex-shrink-0">
+                <div className="flex items-center gap-2">
+                  <Monitor className="w-4 h-4 text-gold" />
+                  <span className="text-xs text-gold">
+                    建议在桌面端查看以获得最佳体验
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowMobileTip(false)}
+                  className="text-gold/70 hover:text-gold transition-colors"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
 
             {/* Iframe Container */}
             <div className="flex-1 relative bg-surface-primary">
