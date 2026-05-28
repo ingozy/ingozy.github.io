@@ -51,9 +51,11 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
 
             {/* Status badge */}
             {project.status === 'paused' && (
-              <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded bg-slate-800/50 border border-slate-600/30">
-                <Pause className="w-2.5 h-2.5 text-slate-300" />
-                <span className="text-[10px] font-medium text-slate-300 tracking-wide">暂停开发</span>
+              <div className="absolute top-3 right-3">
+                <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-mono font-medium bg-slate-500/15 text-slate-400 border border-slate-500/25 backdrop-blur-sm">
+                  <Pause className="w-3 h-3" />
+                  暂停开发
+                </span>
               </div>
             )}
           </div>
