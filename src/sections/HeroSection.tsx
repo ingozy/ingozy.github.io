@@ -63,10 +63,7 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p>专注于 AI 工具与 AI × 硬件在生活场景中的落地，相信好的技术应该让人更自由。</p>
-            <p className="mt-3">
-              独立游戏因缺少美术合伙人暂时停滞，后续会在项目区更新进展并寻找志同道合的伙伴。
-            </p>
+            <p>专注于 AI 工具与 AI × 硬件在生活和工作场景中的落地，相信好的技术应该让人更自由。</p>
           </motion.div>
 
           {/* Keywords */}
