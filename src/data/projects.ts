@@ -10,7 +10,7 @@ export interface Project {
   title: string;
   shortDescription: string;
   fullDescription: string;
-  type: 'iframe' | 'video';
+  type: 'iframe' | 'video' | 'showcase';
   thumbnail: string;
   techStack: string[];
   categories: string[];
@@ -101,6 +101,26 @@ export const projects: Project[] = [
         thumbnail: '/thumbnails/project-4.jpeg',
       },
     ],
+  },
+  {
+    id: 'openclaw-agent',
+    title: 'openclaw多agent团队',
+    shortDescription: '本地搭建的openclaw，通过飞书群完成多agent沟通建立工作流。',
+    fullDescription: '本地部署 OpenClaw 多智能体框架，在飞书群中配置多个 AI Agent 角色，实现自动化工作流协作。展示 AI 工作流搭建与工具整合能力。',
+    type: 'showcase',
+    thumbnail: '/thumbnails/project-5.png',
+    techStack: ['OpenClaw'],
+    categories: ['AI工作流'],
+  },
+  {
+    id: 'cfm-game',
+    title: 'CFM游戏',
+    shortDescription: '一个猫咪打工去养活人类的生活模拟类游戏。',
+    fullDescription: '独立游戏项目概念与 UI 设计展示。一款生活模拟类游戏，玩家扮演外出打工的猫咪，通过完成各种工作赚取收入来养活家中的人类。',
+    type: 'showcase',
+    thumbnail: '/thumbnails/project-6.jpeg',
+    techStack: ['Godot'],
+    categories: ['独立游戏'],
   },
 ];
 

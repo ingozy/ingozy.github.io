@@ -5,11 +5,12 @@ import type { Project } from '@/data/projects';
 interface ProjectCardProps {
   project: Project;
   index: number;
-  onPreview: () => void;
+  onPreview?: () => void;
 }
 
 export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
   const isVideo = project.type === 'video';
+  const isShowcase = project.type === 'showcase';
 
   return (
     <motion.div
@@ -25,8 +26,8 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
     >
       {/* Outer: luminous border */}
       <div
-        className="luminous-border rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover cursor-pointer"
-        onClick={onPreview}
+        className={`luminous-border rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover ${isShowcase ? '' : 'cursor-pointer'}`}
+        onClick={isShowcase ? undefined : onPreview}
       >
         {/* Inner: card content */}
         <div className="relative bg-surface rounded-xl overflow-hidden">
@@ -79,14 +80,16 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
             </div>
 
             {/* Action */}
-            <div className="mt-5 flex items-center gap-3">
-              <span className="gold-btn text-sm py-2.5 px-5">
-                {isVideo ? '观看演示' : '实时预览'}
-              </span>
-              <span className="ghost-btn text-sm py-2.5 px-4">
-                {isVideo ? '视频' : '可交互'}
-              </span>
-            </div>
+            {!isShowcase && (
+              <div className="mt-5 flex items-center gap-3">
+                <span className="gold-btn text-sm py-2.5 px-5">
+                  {isVideo ? '观看演示' : '实时预览'}
+                </span>
+                <span className="ghost-btn text-sm py-2.5 px-4">
+                  {isVideo ? '视频' : '可交互'}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>

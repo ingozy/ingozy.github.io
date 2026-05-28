@@ -19,6 +19,7 @@ export default function App() {
   const handleSelectProject = useCallback((projectId: string) => {
     const project = projects.find((p) => p.id === projectId);
     if (!project) return;
+    if (project.type === 'showcase') return;
 
     setActiveProject(project);
     setModalType(project.type);
