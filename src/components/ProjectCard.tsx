@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, Pause } from 'lucide-react';
 import type { Project } from '@/data/projects';
 
 interface ProjectCardProps {
@@ -46,6 +46,14 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
                 <div className="w-14 h-14 rounded-full bg-gold/90 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                   <Play className="w-6 h-6 text-surface-primary ml-1" fill="currentColor" />
                 </div>
+              </div>
+            )}
+
+            {/* Status badge */}
+            {project.status === 'paused' && (
+              <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-0.5 rounded bg-slate-800/50 border border-slate-600/30">
+                <Pause className="w-2.5 h-2.5 text-slate-300" />
+                <span className="text-[10px] font-medium text-slate-300 tracking-wide">暂停开发</span>
               </div>
             )}
           </div>

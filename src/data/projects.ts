@@ -14,6 +14,7 @@ export interface Project {
   thumbnail: string;
   techStack: string[];
   categories: string[];
+  status?: 'paused';
   iframeSrc?: string;
   videos?: VideoItem[];
 }
@@ -115,12 +116,13 @@ export const projects: Project[] = [
   {
     id: 'cfm-game',
     title: 'CFM游戏',
-    shortDescription: '一个猫咪打工去养活人类的生活模拟类游戏。',
+    shortDescription: '一个猫咪打工去养活人类的生活模拟类游戏。（缺少美术合伙人）',
     fullDescription: '独立游戏项目概念与 UI 设计展示。一款生活模拟类游戏，玩家扮演外出打工的猫咪，通过完成各种工作赚取收入来养活家中的人类。',
     type: 'showcase',
     thumbnail: '/thumbnails/project-6.jpeg',
     techStack: ['Godot'],
     categories: ['独立游戏'],
+    status: 'paused',
   },
 ];
 
