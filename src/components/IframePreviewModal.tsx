@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, Monitor } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 import type { Project } from '@/data/projects';
 
 interface IframePreviewModalProps {
@@ -14,16 +16,20 @@ export function IframePreviewModal({
   open,
   onClose,
 }: IframePreviewModalProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [loading, setLoading] = useState(true);
 
-  // Reset loading state when project changes
+  const title = language === 'en' && project?.titleEn
+    ? project.titleEn
+    : project?.title;
+
   useEffect(() => {
     if (open) {
       setLoading(true);
     }
   }, [open, project?.id]);
 
-  // Handle ESC key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -50,13 +56,11 @@ export function IframePreviewModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          {/* Overlay */}
           <div
             className="absolute inset-0 bg-black/85 backdrop-blur-sm"
             onClick={onClose}
           />
 
-          {/* Modal */}
           <motion.div
             className="relative w-full h-full md:max-w-[90vw] md:h-[90vh] bg-surface md:rounded-xl border-0 md:border border-border overflow-hidden flex flex-col"
             initial={{ scale: 0.95, opacity: 0 }}
@@ -64,16 +68,14 @@ export function IframePreviewModal({
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Header */}
             <div className="flex items-center justify-between px-5 h-14 border-b border-border flex-shrink-0">
               <div className="flex items-center gap-3">
                 <h3 className="text-sm font-semibold text-txt-primary">
-                  {project.title}
+                  {title}
                 </h3>
               </div>
 
               <div className="flex items-center gap-3">
-                {/* Tech tags */}
                 <div className="hidden sm:flex items-center gap-2">
                   {project.techStack.map((tech) => (
                     <span key={tech} className="tech-tag text-[11px] py-0.5">
@@ -82,44 +84,39 @@ export function IframePreviewModal({
                   ))}
                 </div>
 
-                {/* Close button */}
                 <button
                   onClick={onClose}
                   className="ghost-btn p-2"
-                  title="关闭 (ESC)"
+                  title={t.modal.close}
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Mobile tip banner */}
             <div className="md:hidden flex items-center gap-2 px-4 py-2.5 bg-gold/10 border-b border-gold/20 flex-shrink-0">
               <Monitor className="w-4 h-4 text-gold flex-shrink-0" />
               <span className="text-xs text-gold">
-                建议在桌面端查看以获得最佳体验
+                {t.modal.desktopTip}
               </span>
             </div>
 
-            {/* Iframe Container */}
             <div className="flex-1 relative bg-surface-primary">
-              {/* Loading skeleton */}
               {loading && (
                 <div className="absolute inset-0 flex items-center justify-center bg-surface-primary z-10">
                   <div className="flex flex-col items-center gap-3">
                     <Loader2 className="w-8 h-8 text-gold animate-spin" />
                     <span className="text-sm text-txt-muted font-mono">
-                      加载中...
+                      {t.modal.loading}
                     </span>
                   </div>
                 </div>
               )}
 
-              {/* Iframe */}
               {project.iframeSrc && (
                 <iframe
                   src={project.iframeSrc}
-                  title={project.title}
+                  title={title}
                   className="w-full h-full border-0"
                   sandbox="allow-scripts allow-same-origin allow-popups allow-downloads"
                   onLoad={() => setLoading(false)}

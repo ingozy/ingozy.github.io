@@ -1,12 +1,17 @@
 import { projects } from '@/data/projects';
 import { ProjectCard } from '@/components/ProjectCard';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 
 interface ProjectsGridProps {
   onSelectProject: (projectId: string) => void;
 }
 
 export function ProjectsGrid({ onSelectProject }: ProjectsGridProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section id="projects" className="py-24 md:py-32">
       <div className="section-container">
@@ -15,7 +20,7 @@ export function ProjectsGrid({ onSelectProject }: ProjectsGridProps) {
           <div className="flex items-center gap-4 mb-12">
             <span className="w-10 h-0.5 bg-gold rounded-full" />
             <h2 className="text-3xl md:text-4xl font-bold text-txt-primary">
-              项目作品
+              {t.projects.title}
             </h2>
           </div>
         </ScrollReveal>

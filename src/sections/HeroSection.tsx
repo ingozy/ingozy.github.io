@@ -1,13 +1,16 @@
 import { motion } from 'framer-motion';
 import { Mail } from 'lucide-react';
-
-const keywords = ['AI工作流搭建', '产品设计', '网页开发', '游戏设计'];
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 
 interface HeroSectionProps {
   onOpenContact?: () => void;
 }
 
 export function HeroSection({ onOpenContact }: HeroSectionProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section
       id="hero"
@@ -51,7 +54,7 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               >
-                独立开发者
+                {t.hero.role}
               </motion.p>
             </div>
           </div>
@@ -63,7 +66,7 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
-            <p>专注于 AI 工具与 AI × 硬件在生活和工作场景中的落地，相信好的技术应该让人更自由。</p>
+            <p>{t.hero.bio}</p>
           </motion.div>
 
           {/* Keywords */}
@@ -73,10 +76,10 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            {keywords.map((kw, i) => (
+            {t.hero.keywords.map((kw, i) => (
               <span key={kw} className="flex items-center gap-2">
                 <span className="font-mono text-xs text-txt-muted">{kw}</span>
-                {i < keywords.length - 1 && (
+                {i < t.hero.keywords.length - 1 && (
                   <span className="text-gold/30 text-[10px]">·</span>
                 )}
               </span>
@@ -96,7 +99,7 @@ export function HeroSection({ onOpenContact }: HeroSectionProps) {
                 className="gold-btn text-xs py-2 px-4"
               >
                 <Mail className="w-3.5 h-3.5" />
-                联系我
+                {t.hero.contact}
               </button>
             )}
           </motion.div>

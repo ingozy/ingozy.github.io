@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { LanguageProvider } from '@/contexts/LanguageContext';
 import { Navigation } from '@/components/Navigation';
 import { HeroSection } from '@/sections/HeroSection';
 import { ProjectsGrid } from '@/sections/ProjectsGrid';
@@ -10,7 +11,7 @@ import { ContactModal } from '@/components/ContactModal';
 import { projects } from '@/data/projects';
 import type { Project } from '@/data/projects';
 
-export default function App() {
+function AppContent() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'iframe' | 'video' | null>(null);
@@ -28,7 +29,6 @@ export default function App() {
 
   const handleCloseModal = useCallback(() => {
     setModalOpen(false);
-    // Delay clearing project to allow exit animation
     setTimeout(() => {
       setActiveProject(null);
       setModalType(null);
@@ -54,25 +54,30 @@ export default function App() {
         <FooterSection />
       </main>
 
-      {/* Iframe Preview Modal */}
       <IframePreviewModal
         project={modalType === 'iframe' ? activeProject : null}
         open={modalOpen && modalType === 'iframe'}
         onClose={handleCloseModal}
       />
 
-      {/* Video Gallery Modal */}
       <VideoGalleryModal
         project={modalType === 'video' ? activeProject : null}
         open={modalOpen && modalType === 'video'}
         onClose={handleCloseModal}
       />
 
-      {/* Contact Modal */}
       <ContactModal
         open={contactOpen}
         onClose={handleCloseContact}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <LanguageProvider>
+      <AppContent />
+    </LanguageProvider>
   );
 }

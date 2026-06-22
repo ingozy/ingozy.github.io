@@ -1,12 +1,17 @@
 import { Github, ArrowUp, MessageSquare, Mail } from 'lucide-react';
-
-const navLinks = [
-  { id: 'projects', label: '项目' },
-  { id: 'tech-stack', label: '技术栈' },
-  { id: 'hero', label: '顶部' },
-];
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 
 export function FooterSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const navLinks = [
+    { id: 'projects', label: t.nav.projects },
+    { id: 'tech-stack', label: t.nav.techStack },
+    { id: 'hero', label: t.footer.top },
+  ];
+
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -27,17 +32,17 @@ export function FooterSection() {
               ingozhou
             </h3>
             <p className="mt-2 text-sm text-txt-secondary">
-              独立开发者 · AI 产品构建者
+              {t.footer.role}
             </p>
             <p className="mt-4 text-xs text-txt-muted font-mono">
-              前腾讯游戏策划 → AI 辅助独立开发
+              {t.footer.bio}
             </p>
           </div>
 
           {/* Center: Navigation */}
           <div>
             <h4 className="text-sm font-semibold text-txt-primary mb-4">
-              导航
+              {t.footer.navigation}
             </h4>
             <div className="flex flex-col gap-2">
               {navLinks.map((link) => (
@@ -55,7 +60,7 @@ export function FooterSection() {
           {/* Right: Contact */}
           <div>
             <h4 className="text-sm font-semibold text-txt-primary mb-4">
-              联系方式
+              {t.footer.contact}
             </h4>
             <div className="flex flex-col gap-2">
               <a
@@ -69,7 +74,7 @@ export function FooterSection() {
               </a>
               <span className="inline-flex items-center gap-2 text-sm text-txt-secondary w-fit">
                 <MessageSquare className="w-4 h-4 text-txt-muted" />
-                微信：inherentid
+                {t.footer.weChat}：inherentid
               </span>
               <span className="inline-flex items-center gap-2 text-sm text-txt-secondary w-fit">
                 <Mail className="w-4 h-4 text-txt-muted" />
@@ -82,13 +87,13 @@ export function FooterSection() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-txt-muted font-mono">
-            &copy; {new Date().getFullYear()} — Designed and built by hand
+            &copy; {new Date().getFullYear()} ingozhou
           </p>
 
           <button
             onClick={() => scrollTo('hero')}
             className="ghost-btn p-2"
-            title="回到顶部"
+            title={t.footer.top}
           >
             <ArrowUp className="w-4 h-4" />
           </button>

@@ -7,6 +7,8 @@ import {
 } from 'lucide-react';
 import { techCategories } from '@/data/projects';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 
 const iconMap: Record<string, React.ReactNode> = {
   Layout: <Layout className="w-5 h-5" />,
@@ -17,6 +19,9 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export function TechStackSection() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <section id="tech-stack" className="py-24 md:py-32 border-t border-border">
       <div className="section-container">
@@ -25,11 +30,11 @@ export function TechStackSection() {
           <div className="flex items-center gap-4 mb-4">
             <span className="w-10 h-0.5 bg-gold rounded-full" />
             <h2 className="text-3xl md:text-4xl font-bold text-txt-primary">
-              技术栈
+              {t.techStack.title}
             </h2>
           </div>
           <p className="text-txt-secondary max-w-xl mb-12 ml-14">
-            通过 AI 协作独立完成从产品设计、前端交互到后端服务的全栈交付
+            {t.techStack.subtitle}
           </p>
         </ScrollReveal>
 

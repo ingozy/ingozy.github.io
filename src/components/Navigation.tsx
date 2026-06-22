@@ -1,9 +1,11 @@
 import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 
 const navItems = [
-  { id: 'hero', label: '首页' },
-  { id: 'projects', label: '项目' },
-  { id: 'tech-stack', label: '技术栈' },
+  { id: 'hero', label: 'home' },
+  { id: 'projects', label: 'projects' },
+  { id: 'tech-stack', label: 'techStack' },
 ];
 
 interface NavigationProps {
@@ -12,7 +14,9 @@ interface NavigationProps {
 
 export function Navigation({ onOpenContact }: NavigationProps) {
   const { scrollY, activeSection } = useScrollPosition();
+  const { language, toggleLanguage } = useLanguage();
   const isScrolled = scrollY > 100;
+  const t = translations[language];
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -51,12 +55,21 @@ export function Navigation({ onOpenContact }: NavigationProps) {
                     : 'text-txt-secondary hover:text-txt-primary'
                 }`}
               >
-                {item.label}
+                {t.nav[item.label as keyof typeof t.nav]}
                 {activeSection === item.id && (
                   <span className="absolute bottom-0 left-4 right-4 h-0.5 bg-gold rounded-full" />
                 )}
               </button>
             ))}
+
+            {/* Language toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="ml-1 px-3 py-2 text-sm font-mono font-medium text-txt-secondary hover:text-gold transition-colors"
+              title={language === 'zh' ? 'Switch to English' : '切换到中文'}
+            >
+              {language === 'zh' ? 'EN' : '中'}
+            </button>
 
             {/* Contact button */}
             {onOpenContact && (
@@ -64,7 +77,7 @@ export function Navigation({ onOpenContact }: NavigationProps) {
                 onClick={onOpenContact}
                 className="ml-2 px-4 py-2 text-sm font-medium text-gold border border-gold/30 rounded-lg hover:bg-gold/10 transition-colors"
               >
-                联系我
+                {t.nav.contact}
               </button>
             )}
           </div>

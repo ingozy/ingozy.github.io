@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Play, Pause } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 import type { Project } from '@/data/projects';
 
 interface ProjectCardProps {
@@ -9,8 +11,18 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
   const isVideo = project.type === 'video';
   const isShowcase = project.type === 'showcase';
+
+  const title = language === 'en' && project.titleEn ? project.titleEn : project.title;
+  const shortDescription = language === 'en' && project.shortDescriptionEn
+    ? project.shortDescriptionEn
+    : project.shortDescription;
+  const categories = language === 'en' && project.categoriesEn
+    ? project.categoriesEn
+    : project.categories;
 
   return (
     <motion.div
@@ -24,23 +36,19 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
       }}
       className="group"
     >
-      {/* Outer: luminous border */}
       <div
         className={`luminous-border rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover ${isShowcase ? '' : 'cursor-pointer'}`}
         onClick={isShowcase ? undefined : onPreview}
       >
-        {/* Inner: card content */}
         <div className="relative bg-surface rounded-xl overflow-hidden">
-          {/* Thumbnail */}
           <div className="relative aspect-[16/10] overflow-hidden bg-surface-elevated">
             <img
               src={project.thumbnail}
-              alt={project.title}
+              alt={title}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
               loading="lazy"
             />
 
-            {/* Video play overlay */}
             {isVideo && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/30 transition-opacity duration-300 group-hover:bg-black/40">
                 <div className="w-14 h-14 rounded-full bg-gold/90 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
@@ -49,30 +57,25 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
               </div>
             )}
 
-            {/* Status badge */}
             {project.status === 'paused' && (
               <div className="absolute top-3 right-3">
                 <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md text-xs font-mono font-medium bg-slate-500/15 text-slate-400 border border-slate-500/25 backdrop-blur-sm">
                   <Pause className="w-3 h-3" />
-                  暂停开发
+                  {t.projects.paused}
                 </span>
               </div>
             )}
           </div>
 
-          {/* Content */}
           <div className="p-5">
-            {/* Title */}
             <h3 className="text-lg font-semibold text-txt-primary group-hover:text-gold transition-colors">
-              {project.title}
+              {title}
             </h3>
 
-            {/* Description */}
             <p className="mt-2 text-sm text-txt-secondary leading-relaxed line-clamp-2">
-              {project.shortDescription}
+              {shortDescription}
             </p>
 
-            {/* Tech stack line */}
             <div className="mt-3">
               <span className="inline-flex items-center text-[11px] font-mono text-txt-muted">
                 <span className="w-1 h-1 rounded-full bg-gold/50 mr-2" />
@@ -80,23 +83,21 @@ export function ProjectCard({ project, index, onPreview }: ProjectCardProps) {
               </span>
             </div>
 
-            {/* Category tags */}
             <div className="mt-3 flex flex-wrap gap-2">
-              {project.categories.map((cat) => (
+              {categories.map((cat) => (
                 <span key={cat} className="tech-tag">
                   {cat}
                 </span>
               ))}
             </div>
 
-            {/* Action */}
             {!isShowcase && (
               <div className="mt-5 flex items-center gap-3">
                 <span className="gold-btn text-sm py-2.5 px-5">
-                  {isVideo ? '观看演示' : '实时预览'}
+                  {isVideo ? t.projects.watchDemo : t.projects.livePreview}
                 </span>
                 <span className="ghost-btn text-sm py-2.5 px-4">
-                  {isVideo ? '视频' : '可交互'}
+                  {isVideo ? t.projects.video : t.projects.interactive}
                 </span>
               </div>
             )}

@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Play, Pause, Maximize, Volume2, VolumeX } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { translations } from '@/data/translations';
 import type { Project } from '@/data/projects';
 
 interface VideoGalleryModalProps {
@@ -14,6 +16,8 @@ export function VideoGalleryModal({
   open,
   onClose,
 }: VideoGalleryModalProps) {
+  const { language } = useLanguage();
+  const t = translations[language];
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -25,7 +29,22 @@ export function VideoGalleryModal({
   const videos = project?.videos || [];
   const currentVideo = videos[activeIndex];
 
-  // Reset state when project changes
+  const projectTitle = language === 'en' && project?.titleEn
+    ? project.titleEn
+    : project?.title;
+
+  const getVideoTitle = (video: typeof currentVideo) => {
+    if (!video) return '';
+    return language === 'en' && video.titleEn ? video.titleEn : video.title;
+  };
+
+  const getVideoDescription = (video: typeof currentVideo) => {
+    if (!video) return '';
+    return language === 'en' && video.descriptionEn
+      ? video.descriptionEn
+      : video.description;
+  };
+
   useEffect(() => {
     if (open && project) {
       setActiveIndex(0);
@@ -34,7 +53,6 @@ export function VideoGalleryModal({
     }
   }, [open, project?.id]);
 
-  // Handle video playback
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -46,7 +64,6 @@ export function VideoGalleryModal({
     }
   }, [isPlaying, activeIndex]);
 
-  // Handle progress updates
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -61,7 +78,6 @@ export function VideoGalleryModal({
     return () => video.removeEventListener('timeupdate', updateProgress);
   }, [activeIndex]);
 
-  // Handle video end
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -75,7 +91,6 @@ export function VideoGalleryModal({
     return () => video.removeEventListener('ended', handleEnded);
   }, [activeIndex]);
 
-  // Keyboard controls
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -94,7 +109,6 @@ export function VideoGalleryModal({
     };
   }, [open, onClose]);
 
-  // Auto-hide controls
   const handleMouseMove = () => {
     setShowControls(true);
     if (controlsTimer.current) clearTimeout(controlsTimer.current);
@@ -143,13 +157,11 @@ export function VideoGalleryModal({
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          {/* Overlay */}
           <div
             className="absolute inset-0 bg-black/90 backdrop-blur-sm"
             onClick={onClose}
           />
 
-          {/* Modal */}
           <motion.div
             className={`relative bg-surface rounded-xl border border-border overflow-hidden flex ${
               isSingleVideo
@@ -161,7 +173,6 @@ export function VideoGalleryModal({
             exit={{ scale: 0.95, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Close button (mobile) */}
             <button
               onClick={onClose}
               className="absolute top-3 right-3 z-20 ghost-btn p-2 bg-surface/80 backdrop-blur-sm"
@@ -169,12 +180,10 @@ export function VideoGalleryModal({
               <X className="w-4 h-4" />
             </button>
 
-            {/* Video Player Area */}
             <div
               className={`flex-1 flex flex-col ${!isSingleVideo ? 'md:flex-row' : ''}`}
               onMouseMove={handleMouseMove}
             >
-              {/* Main Video */}
               <div
                 className={`relative bg-black flex items-center justify-center ${
                   isSingleVideo ? 'aspect-video' : 'flex-1'
@@ -191,7 +200,6 @@ export function VideoGalleryModal({
                       onClick={() => setIsPlaying(!isPlaying)}
                     />
 
-                    {/* Center play button when paused */}
                     {!isPlaying && (
                       <div
                         className="absolute inset-0 flex items-center justify-center cursor-pointer"
@@ -206,7 +214,6 @@ export function VideoGalleryModal({
                       </div>
                     )}
 
-                    {/* Controls overlay */}
                     <div
                       className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent px-4 pb-4 pt-12 transition-opacity duration-300 ${
                         showControls || !isPlaying
@@ -214,7 +221,6 @@ export function VideoGalleryModal({
                           : 'opacity-0'
                       }`}
                     >
-                      {/* Progress bar */}
                       <div className="mb-3">
                         <input
                           type="range"
@@ -229,7 +235,6 @@ export function VideoGalleryModal({
                         />
                       </div>
 
-                      {/* Control buttons */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <button
@@ -282,20 +287,17 @@ export function VideoGalleryModal({
                 )}
               </div>
 
-              {/* Video List Sidebar (multi-video only) */}
               {!isSingleVideo && (
                 <div className="w-full md:w-72 border-t md:border-t-0 md:border-l border-border bg-surface flex-shrink-0 flex flex-col md:max-h-none">
-                  {/* Video list header - desktop only */}
                   <div className="hidden md:block px-4 py-3 border-b border-border">
                     <h4 className="text-sm font-semibold text-txt-primary">
-                      {project.title}
+                      {projectTitle}
                     </h4>
                     <p className="text-xs text-txt-muted mt-1">
-                      {videos.length} 个视频片段
+                      {videos.length} {t.modal.videosCount}
                     </p>
                   </div>
 
-                  {/* Video list - mobile: horizontal tabs, desktop: vertical sidebar */}
                   <div className="flex md:flex-col overflow-x-auto md:overflow-y-auto md:flex-1"
                        style={{ WebkitOverflowScrolling: 'touch' }}>
                     {videos.map((video, index) => (
@@ -311,11 +313,10 @@ export function VideoGalleryModal({
                             : 'border-b-transparent md:border-l-transparent hover:bg-surface-elevated'
                         }`}
                       >
-                        {/* Thumbnail - desktop only */}
                         <div className="hidden md:block relative w-20 h-12 rounded-md overflow-hidden flex-shrink-0 bg-surface-primary">
                           <img
                             src={video.thumbnail}
-                            alt={video.title}
+                            alt={getVideoTitle(video)}
                             className="w-full h-full object-cover"
                           />
                           {activeIndex === index && isPlaying && (
@@ -336,17 +337,16 @@ export function VideoGalleryModal({
                                 : 'text-txt-primary'
                             }`}
                           >
-                            {video.title}
+                            {getVideoTitle(video)}
                           </p>
                           <p className="hidden md:block text-xs text-txt-muted mt-0.5 line-clamp-2">
-                            {video.description}
+                            {getVideoDescription(video)}
                           </p>
                         </div>
                       </button>
                     ))}
                   </div>
 
-                  {/* Tech tags - desktop only */}
                   <div className="hidden md:block px-4 py-3 border-t border-border">
                     <div className="flex flex-wrap gap-1.5">
                       {project.techStack.map((tech) => (
